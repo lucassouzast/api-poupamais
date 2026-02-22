@@ -1,7 +1,7 @@
 const express = require("express");
 
 const authRoutes = require("./auth.routes");
-
+const authMiddleware = require("../middlewares/auth.middleware");
 const router = express.Router();
 
 router.get("/", (req, res) => {
@@ -12,10 +12,13 @@ router.post("/teste", (req, res) => {
   const dados = req.body;
   res.json({
     message: "Dados recebidos",
-    data: dados
+    data: dados,
   });
 });
 
 router.use("/auth", authRoutes);
+router.get("/privada", authMiddleware, (req, res) => {
+  res.json({ message: "Acesso autorizado", userId: req.userId });
+});
 
 module.exports = router;
