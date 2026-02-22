@@ -2,6 +2,7 @@ const express = require("express");
 
 const authRoutes = require("./auth.routes");
 const categoriesRoutes = require("./categories.routes");
+const entriesRoutes = require("./entries.routes");
 
 const authMiddleware = require("../middlewares/auth.middleware");
 const router = express.Router();
@@ -19,6 +20,7 @@ router.post("/teste", (req, res) => {
 });
 
 router.use("/auth", authRoutes);
+router.use("/entries", entriesRoutes);
 router.use("/categories", categoriesRoutes);
 router.get("/privada", authMiddleware, (req, res) => {
   res.json({ message: "Acesso autorizado", userId: req.userId });
