@@ -3,7 +3,7 @@ const User = require("../models/User");
 
 async function getMe(req, res) {
   try {
-    const user = await User.findById(req.userId).select("_id nome email");
+    const user = await User.findById(req.userId).select("_id name email");
     if (!user) {
       return res.status(404).json({ message: "usuário não encontrado" });
     }
@@ -15,7 +15,7 @@ async function getMe(req, res) {
 
 async function updateMe(req, res) {
   try {
-    const { nome, email, password } = req.body;
+    const { name, email, password } = req.body;
 
     const user = await User.findById(req.userId);
     if (!user) {
@@ -30,7 +30,7 @@ async function updateMe(req, res) {
       user.email = email;
     }
 
-    if (nome !== undefined) user.nome = nome;
+    if (name !== undefined) user.name = name;
 
     if (password !== undefined) {
       if (password.length < 6) {
@@ -45,7 +45,7 @@ async function updateMe(req, res) {
       message: "usuário atualizado com sucesso",
       user: {
         _id: user._id,
-        nome: user.nome,
+        name: user.name,
         email: user.email
       }
     });
