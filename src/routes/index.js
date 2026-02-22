@@ -16,6 +16,6 @@ router.post("/teste", (req, res) => {
   });
 });
 
-router.post("/register", authRoutes);
+router.use("/auth", authRoutes);
 
 module.exports = router;
