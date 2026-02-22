@@ -4,13 +4,15 @@ const authRoutes = require("./auth.routes");
 const categoriesRoutes = require("./categories.routes");
 const entriesRoutes = require("./entries.routes");
 const userRoutes = require("./users.routes");
-
+const ping = require("./ping");
 const router = express.Router();
 
 router.get("/", (req, res) => {
   res.send("API online");
 });
 
+
+router.use("/ping", ping);
 router.use("/auth", authRoutes);
 router.use("/entries", entriesRoutes);
 router.use("/categories", categoriesRoutes);
