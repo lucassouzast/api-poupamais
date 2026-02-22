@@ -4,8 +4,17 @@ const connectDatabase = require("./database");
 
 const PORT = process.env.PORT || 3000;
 
-app.listen(PORT, () => {
-  console.log(`Servidor rodando na porta ${PORT}`);
-});
+async function bootstrap() {
+  try {
+    await connectDatabase();
 
-connectDatabase();
+    app.listen(PORT, () => {
+      console.log(`Servidor rodando na porta ${PORT}`);
+    });
+  } catch (error) {
+    console.error("Falha ao iniciar API:", error.message);
+    process.exit(1);
+  }
+}
+
+bootstrap();

@@ -1,12 +1,19 @@
 const mongoose = require("mongoose");
 
 async function connectDatabase() {
-  try {
-    await mongoose.connect(process.env.MONGODB_URI);
-    console.log("MongoDB conectado");
-  } catch (error) {
-    console.error("Erro ao conectar no MongoDB:", error.message);
+  const mongoUri = process.env.MONGODB_URI;
+
+  if (!mongoUri) {
+    throw new Error("MONGODB_URI nao definida");
   }
+
+  await mongoose.connect(mongoUri, {
+    serverSelectionTimeoutMS: 10000,
+    socketTimeoutMS: 45000,
+    maxPoolSize: 10
+  });
+
+  console.log("MongoDB conectado");
 }
 
 module.exports = connectDatabase;
