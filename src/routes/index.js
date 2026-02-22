@@ -1,5 +1,7 @@
 const express = require("express");
 
+const authRoutes = require("./auth.routes");
+
 const router = express.Router();
 
 router.get("/", (req, res) => {
@@ -13,5 +15,7 @@ router.post("/teste", (req, res) => {
     data: dados
   });
 });
+
+router.post("/register", authRoutes);
 
 module.exports = router;
