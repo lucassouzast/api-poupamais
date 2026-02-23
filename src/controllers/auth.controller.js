@@ -1,6 +1,7 @@
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const User = require("../models/User");
+const { getJwtSecret } = require("../config/env");
 
 async function register(req, res) {
   try {
@@ -50,7 +51,7 @@ async function login(req, res) {
       return res.status(401).json({ message: "credenciais inválidas" });
     }
 
-    const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET, { expiresIn: "30d" });
+    const token = jwt.sign({ userId: user._id }, getJwtSecret(), { expiresIn: "30d" });
 
     return res.status(200).json({
       token,
