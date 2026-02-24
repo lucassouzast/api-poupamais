@@ -12,10 +12,10 @@ async function listEntries(req, res) {
 
 async function createEntry(req, res) {
   try {
-    const { title, value, date, category, details } = req.body;
+    const { description, value, date, category } = req.body;
 
-    if (!title || !value || !date || !category) {
-      return res.status(400).json({ message: "title, value, date e category são obrigatórios" });
+    if (value === undefined || !date || !category) {
+      return res.status(400).json({ message: "value, date e category sao obrigatorios" });
     }
 
     const categoryExists = await Category.findOne({
@@ -24,14 +24,13 @@ async function createEntry(req, res) {
     });
 
     if (!categoryExists) {
-      return res.status(400).json({ message: "categoria não encontrada" });
+      return res.status(400).json({ message: "categoria nao encontrada" });
     }
 
     const entry = await Entry.create({
-      title,
+      description: description || "",
       value,
       date,
-      details: details || "",
       category: categoryExists._id,
       user: req.userId
     });
@@ -46,7 +45,7 @@ async function createEntry(req, res) {
 
 async function updateEntry(req, res) {
   try {
-    const { title, value, date, details, category } = req.body;
+    const { description, value, date, category } = req.body;
 
     const entry = await Entry.findOne({
       _id: req.params.id,
@@ -54,7 +53,7 @@ async function updateEntry(req, res) {
     });
 
     if (!entry) {
-      return res.status(404).json({ message: "lançamento não encontrado" });
+      return res.status(404).json({ message: "lancamento nao encontrado" });
     }
 
     if (category !== undefined) {
@@ -64,16 +63,15 @@ async function updateEntry(req, res) {
       });
 
       if (!categoryExists) {
-        return res.status(404).json({ message: "categoria não encontrada" });
+        return res.status(404).json({ message: "categoria nao encontrada" });
       }
 
       entry.category = categoryExists._id;
     }
 
-    if (title !== undefined) entry.title = title;
+    if (description !== undefined) entry.description = description;
     if (value !== undefined) entry.value = value;
     if (date !== undefined) entry.date = date;
-    if (details !== undefined) entry.details = details;
 
     await entry.save();
 
@@ -93,10 +91,10 @@ async function deleteEntry(req, res) {
     });
 
     if (!entry) {
-      return res.status(404).json({ message: "lançamento não encontrado" });
+      return res.status(404).json({ message: "lancamento nao encontrado" });
     }
 
-    return res.json({ message: "lançamento deletado com sucesso" });
+    return res.json({ message: "lancamento deletado com sucesso" });
   } catch (error) {
     console.error("Erro no DELETE /entries/:id", error);
     return res.status(500).json({ message: "erro interno" });

@@ -1,10 +1,9 @@
 const mongoose = require("mongoose");
 
 const entrySchema = new mongoose.Schema({
-  title: { type: String, required: true },
+  description: { type: String },
   value: { type: Number, required: true },
   date: { type: Date, required: true },
-  details: { type: String, default: "" },
   category: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "Category",
