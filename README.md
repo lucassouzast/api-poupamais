@@ -39,3 +39,51 @@ src/
 ├── app.js
 ├── database.js
 └── server.js
+```
+
+## Executando localmente
+
+```bash
+git clone https://github.com/lucassouzast/api-poupamais.git
+cd api-poupamais
+npm install
+```
+
+Crie um arquivo `.env`:
+
+```env
+MONGODB_URI=sua_string_de_conexao
+JWT_SECRET=sua_chave_secreta
+PORT=3000
+```
+
+Execute:
+
+```bash
+npm run dev
+```
+
+ou:
+
+```bash
+npm start
+```
+
+## Front-end
+
+https://github.com/lucassouzast/front-poupamais
+
+Aplicação publicada:
+
+https://front-poupamais.onrender.com/
+
+## Sobre o projeto
+
+O Poupa+ foi desenvolvido como um projeto Full Stack para aplicar conceitos de autenticação, APIs REST, organização de código back-end, persistência de dados e integração entre front-end e back-end.
+
+## Autor
+
+**Lucas Pereira de Souza**
+
+GitHub: https://github.com/lucassouzast  
+LinkedIn: https://www.linkedin.com/in/lucassouza-js/
